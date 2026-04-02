@@ -1,0 +1,1540 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>La Torre de Karin × Vextria</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=IBM+Plex+Mono:wght@400;500&family=Outfit:wght@300;400;500;600;700&display=swap');
+
+:root {
+  --black: #080810;
+  --white: #fafaf8;
+  --accent: #a855f7;
+  --accent-bright: #c084fc;
+  --accent-dim: rgba(168,85,247,.1);
+  --accent-glow: rgba(168,85,247,.25);
+  --gray-1: #f4f4ef;
+  --gray-2: #e5e5dc;
+  --gray-3: #9a9a8a;
+  --gray-4: #52524a;
+  --red: #dc2626;
+  --red-l: #fef2f2;
+  --green: #16a34a;
+  --green-l: #f0fdf4;
+  --amber: #b45309;
+  --amber-l: #fffbeb;
+  --teal: #0f766e;
+  --teal-l: #f0fdfa;
+  --blue: #1d4ed8;
+  --blue-l: #eff6ff;
+  --shadow-sm: 0 1px 3px rgba(0,0,0,.06), 0 1px 2px rgba(0,0,0,.04);
+  --shadow-md: 0 4px 16px rgba(0,0,0,.08), 0 2px 6px rgba(0,0,0,.04);
+  --shadow-lg: 0 12px 40px rgba(0,0,0,.12), 0 4px 16px rgba(0,0,0,.06);
+  --shadow-accent: 0 0 0 1px var(--accent-glow), 0 8px 32px rgba(168,85,247,.15);
+  --radius: 8px;
+  --radius-lg: 14px;
+}
+
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'Outfit', sans-serif;
+  background: var(--white);
+  color: var(--black);
+  font-size: 16px;
+  line-height: 1.8;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ── STICKY NAV ── */
+.topbar {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: rgba(8,8,16,.95);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid rgba(168,85,247,.15);
+  padding: 0 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.topbar-logo img {
+  height: 30px;
+  display: block;
+  filter: brightness(0) invert(1);
+}
+.topbar-nav {
+  display: flex;
+  gap: 4px;
+  list-style: none;
+}
+.topbar-nav a {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 11px;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,.58);
+  text-decoration: none;
+  padding: 6px 14px;
+  border-radius: 4px;
+  transition: all .15s;
+}
+.topbar-nav a:hover { color: var(--accent-bright); background: var(--accent-dim); }
+
+/* ── COVER ── */
+.cover {
+  background: var(--black);
+  color: var(--white);
+  padding: 100px 64px 88px;
+  position: relative;
+  overflow: hidden;
+  min-height: 480px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+}
+.cover-bg {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 60% 80% at 80% -10%, rgba(168,85,247,.18) 0%, transparent 60%),
+    radial-gradient(ellipse 40% 60% at 110% 80%, rgba(168,85,247,.1) 0%, transparent 50%),
+    radial-gradient(ellipse 80% 40% at -10% 110%, rgba(168,85,247,.06) 0%, transparent 50%);
+}
+.cover-grid {
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(168,85,247,.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(168,85,247,.04) 1px, transparent 1px);
+  background-size: 64px 64px;
+}
+.cover-ring {
+  position: absolute;
+  border-radius: 50%;
+  top: -120px;
+  right: -120px;
+  width: 600px;
+  height: 600px;
+  border: 1px solid rgba(168,85,247,.12);
+  pointer-events: none;
+}
+.cover-ring-2 {
+  position: absolute;
+  border-radius: 50%;
+  top: -40px;
+  right: -40px;
+  width: 420px;
+  height: 420px;
+  border: 60px solid rgba(168,85,247,.07);
+  pointer-events: none;
+}
+.cover-content { position: relative; z-index: 1; }
+.eyebrow {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 11px;
+  letter-spacing: .22em;
+  text-transform: uppercase;
+  color: var(--accent-bright);
+  margin-bottom: 22px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.eyebrow::before {
+  content: '';
+  display: block;
+  width: 24px;
+  height: 1px;
+  background: var(--accent);
+}
+.cover h1 {
+  font-family: 'DM Serif Display', serif;
+  font-size: 62px;
+  font-weight: 400;
+  line-height: 1.04;
+  margin-bottom: 16px;
+  letter-spacing: -.02em;
+}
+.cover h1 em { color: var(--accent-bright); font-style: italic; }
+.cover-sub {
+  font-size: 18px;
+  color: rgba(255,255,255,.62);
+  font-weight: 400;
+  max-width: 560px;
+  margin-bottom: 48px;
+  line-height: 1.7;
+}
+.cover-meta {
+  display: flex;
+  gap: 0;
+  flex-wrap: wrap;
+  padding-top: 32px;
+  border-top: 1px solid rgba(255,255,255,.08);
+}
+.cover-meta-item {
+  padding: 0 48px 0 0;
+  margin-right: 0;
+}
+.cover-meta-item:first-child { padding-left: 0; }
+.ml {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 10px;
+  letter-spacing: .15em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,.48);
+  margin-bottom: 4px;
+}
+.mv { font-size: 15px; color: rgba(255,255,255,.88); font-weight: 500; }
+
+/* ── LAYOUT ── */
+.wrap { max-width: 940px; margin: 0 auto; padding: 0 48px; }
+
+.section {
+  padding: 80px 0 64px;
+  border-bottom: 1px solid var(--gray-2);
+}
+.section:last-of-type { border-bottom: none; }
+
+.sec-eyebrow {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 11px;
+  letter-spacing: .22em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 12px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.sec-eyebrow::before {
+  content: '';
+  display: block;
+  width: 20px;
+  height: 1px;
+  background: var(--accent);
+  opacity: .6;
+}
+.sec-title {
+  font-family: 'DM Serif Display', serif;
+  font-size: 40px;
+  font-weight: 400;
+  line-height: 1.12;
+  margin-bottom: 20px;
+  letter-spacing: -.015em;
+}
+.sec-title em { font-style: italic; color: var(--gray-4); }
+.sec-intro {
+  font-size: 17px;
+  color: var(--gray-4);
+  max-width: 680px;
+  margin-bottom: 36px;
+  line-height: 1.75;
+}
+h3 {
+  font-size: 18px;
+  font-weight: 600;
+  margin: 44px 0 16px;
+  color: var(--black);
+}
+h3:first-child { margin-top: 0; }
+p { color: #2e2e2e; margin-bottom: 14px; font-size: 16px; }
+p:last-child { margin-bottom: 0; }
+hr { border: none; border-top: 1px solid var(--gray-2); margin: 44px 0; }
+code {
+  background: var(--gray-1);
+  border: 1px solid var(--gray-2);
+  padding: 2px 8px;
+  border-radius: 4px;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 13px;
+}
+
+/* ── BULLETS ── */
+.blist { list-style: none; margin: 16px 0; }
+.blist li {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  padding: 11px 0;
+  border-bottom: 1px solid var(--gray-2);
+  font-size: 15px;
+  color: #222;
+  line-height: 1.65;
+}
+.blist li:last-child { border-bottom: none; }
+.blist li::before {
+  content: '—';
+  color: var(--accent);
+  font-weight: 700;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+.blist-sm li { padding: 7px 0; font-size: 14.5px; }
+
+/* ── BOXES ── */
+.box {
+  padding: 16px 20px;
+  border-radius: var(--radius);
+  margin: 16px 0;
+  border-left: 3px solid;
+  font-size: 15px;
+  line-height: 1.7;
+}
+.box-bad { background: var(--red-l); border-color: var(--red); color: #7f1d1d; }
+.box-ok { background: var(--green-l); border-color: var(--green); color: #14532d; }
+.box-info { background: #faf5ff; border-color: var(--accent); color: #3b1d6e; }
+.box-amber { background: var(--amber-l); border-color: var(--amber); color: #713f12; }
+.box-teal { background: var(--teal-l); border-color: var(--teal); color: #134e4a; }
+.box-blue { background: var(--blue-l); border-color: var(--blue); color: #1e3a8a; }
+.box-bad::before { content: '⚠  '; font-weight: 700; }
+.box-ok::before { content: '✓  '; font-weight: 700; }
+
+/* ── CARDS ── */
+.card {
+  background: var(--gray-1);
+  border-radius: var(--radius);
+  padding: 20px 22px;
+  margin-bottom: 12px;
+  border: 1px solid var(--gray-2);
+  transition: border-color .2s, box-shadow .2s;
+}
+.card:hover { border-color: rgba(168,85,247,.3); box-shadow: var(--shadow-sm); }
+.card-dark {
+  background: var(--black);
+  color: var(--white);
+  border-radius: var(--radius);
+  padding: 22px 24px;
+  margin-bottom: 12px;
+  border: 1px solid rgba(168,85,247,.2);
+}
+.card-dark p { color: rgba(255,255,255,.55); }
+.clabel {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 11px;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 10px;
+}
+
+/* ── GRIDS ── */
+.g2 { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+.g3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 14px; }
+
+/* ── TABLE ── */
+table { width: 100%; border-collapse: collapse; font-size: 15px; margin: 18px 0; }
+th {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 11px;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  color: var(--gray-4);
+  text-align: left;
+  padding: 12px 14px;
+  border-bottom: 2px solid var(--gray-2);
+  background: var(--gray-1);
+}
+td { padding: 13px 14px; border-bottom: 1px solid var(--gray-2); vertical-align: top; line-height: 1.6; }
+tr:last-child td { border-bottom: none; }
+.check { color: var(--green); font-weight: 700; }
+.cross { color: var(--red); font-weight: 700; }
+.mid { color: var(--amber); font-weight: 700; }
+.td-wp { background: #fff8f8; }
+.td-html { background: #fffdf0; }
+.td-next { background: #f0fdf4; }
+
+/* ── CODE BLOCKS ── */
+.codeblock {
+  background: #0a0a12;
+  border-radius: var(--radius);
+  padding: 20px 24px;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 12px;
+  line-height: 2;
+  margin: 16px 0;
+  overflow-x: auto;
+  border: 1px solid rgba(168,85,247,.15);
+}
+.cok { color: #6ee7b7; }
+.cba { color: #fca5a5; }
+.cmt { color: #4b5563; }
+.cak { color: var(--accent-bright); }
+
+.warn {
+  background: var(--amber-l);
+  border: 1px solid var(--amber);
+  border-radius: 3px;
+  padding: 2px 8px;
+  font-size: 12px;
+  color: #713f12;
+  display: inline-block;
+}
+
+/* ── LINKS ── */
+.link-row { display: flex; flex-wrap: wrap; gap: 8px; margin: 16px 0; }
+.ext-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 10px;
+  letter-spacing: .06em;
+  padding: 8px 16px;
+  border-radius: 4px;
+  border: 1px solid rgba(168,85,247,.3);
+  background: rgba(168,85,247,.04);
+  color: var(--accent);
+  text-decoration: none;
+  transition: all .15s;
+}
+.ext-link:hover { background: rgba(168,85,247,.12); border-color: var(--accent); }
+.ext-link::after { content: ' ↗'; opacity: .5; font-size: 10px; }
+
+/* ── FLOW ── */
+.flow {
+  display: flex;
+  gap: 0;
+  margin: 28px 0;
+  overflow-x: auto;
+  border-radius: var(--radius);
+  background: var(--gray-1);
+  border: 1px solid var(--gray-2);
+  padding: 8px;
+}
+.fstep {
+  flex: 1;
+  min-width: 110px;
+  background: var(--white);
+  border: 1px solid var(--gray-2);
+  border-radius: 6px;
+  padding: 18px 14px;
+  text-align: center;
+  position: relative;
+}
+.fstep + .fstep::before {
+  content: '→';
+  position: absolute;
+  left: -13px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--accent);
+  font-size: 16px;
+  font-weight: 700;
+  background: var(--gray-1);
+  padding: 2px;
+}
+.fstep.fhl { background: var(--black); border-color: rgba(168,85,247,.4); }
+.ficon { font-size: 22px; margin-bottom: 8px; }
+.flabel {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 10px;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 5px;
+}
+.fdesc { font-size: 12px; color: var(--gray-4); line-height: 1.5; }
+.fstep.fhl .fdesc { color: rgba(255,255,255,.65); }
+
+/* ── BOT CARDS ── */
+.bot-grid { display: grid; grid-template-columns: repeat(4,1fr); gap: 12px; margin: 22px 0; }
+.bot-card {
+  border-radius: var(--radius);
+  border: 1px solid var(--gray-2);
+  padding: 18px;
+  background: var(--white);
+  box-shadow: var(--shadow-sm);
+  transition: box-shadow .2s, border-color .2s;
+}
+.bot-card:hover { box-shadow: var(--shadow-md); border-color: rgba(168,85,247,.3); }
+.bname { font-family: 'IBM Plex Mono', monospace; font-size: 13px; font-weight: 500; color: var(--black); margin-bottom: 3px; }
+.bmodel { font-size: 12px; color: var(--accent); margin-bottom: 12px; }
+.btime-row { display: flex; gap: 6px; margin: 8px 0; flex-wrap: wrap; }
+.btime-pill { font-size: 11px; font-weight: 600; padding: 3px 8px; border-radius: 3px; }
+.pill-first { background: var(--teal-l); color: var(--teal); }
+.pill-solid { background: var(--amber-l); color: var(--amber); }
+.bnote { font-size: 12px; color: var(--gray-4); line-height: 1.6; margin-top: 8px; }
+.sbar { height: 3px; border-radius: 2px; margin: 8px 0; background: var(--gray-2); }
+
+/* ── CRAWLER STEPS ── */
+.csteps { display: flex; flex-direction: column; gap: 8px; margin: 18px 0; }
+.csrow {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+  padding: 14px 18px;
+  background: var(--gray-1);
+  border-radius: var(--radius);
+  border: 1px solid var(--gray-2);
+  border-left: 3px solid transparent;
+  transition: border-left-color .2s, box-shadow .2s;
+}
+.csrow:hover { border-left-color: var(--accent); box-shadow: var(--shadow-sm); }
+.csnum {
+  min-width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: var(--black);
+  color: var(--accent-bright);
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+.cstxt { font-size: 15px; line-height: 1.6; color: #1a1a1a; }
+.cstxt span { font-size: 13.5px; color: var(--gray-4); display: block; margin-top: 4px; }
+
+/* ── REACT TREE ── */
+.tree {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 12px;
+  line-height: 2;
+  background: #0a0a12;
+  border-radius: var(--radius);
+  padding: 20px 24px;
+  border: 1px solid rgba(168,85,247,.15);
+}
+.t-root { color: var(--accent-bright); }
+.t-comp { color: #6ee7b7; }
+.t-div { color: #fca5a5; }
+
+/* ── MODULE ── */
+.module {
+  border-left: 3px solid var(--accent);
+  padding: 22px 26px;
+  margin: 20px 0;
+  background: linear-gradient(to right, rgba(168,85,247,.04), transparent);
+  border-radius: 0 var(--radius) var(--radius) 0;
+}
+.mnum {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 11px;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 6px;
+}
+.mtitle { font-size: 19px; font-weight: 600; margin-bottom: 12px; }
+.module p { margin-bottom: 0; font-size: 15.5px; color: #3a3a3a; line-height: 1.75; }
+
+/* ── STRATEGY GRID ── */
+.strat-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 18px 0; }
+.strat {
+  background: var(--white);
+  border: 1px solid var(--gray-2);
+  border-radius: var(--radius);
+  padding: 18px 20px;
+  transition: border-color .2s, box-shadow .2s;
+}
+.strat:hover { border-color: rgba(168,85,247,.35); box-shadow: var(--shadow-sm); }
+.sname {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 11px;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 12px;
+}
+.sbullets { list-style: none; }
+.sbullets li {
+  font-size: 14px;
+  color: #3a3a3a;
+  line-height: 1.7;
+  padding: 4px 0;
+  display: flex;
+  gap: 8px;
+  align-items: flex-start;
+}
+.sbullets li::before { content: '·'; color: var(--accent); font-weight: 700; flex-shrink: 0; }
+
+/* ── NAP ── */
+.nap-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 12px; margin: 16px 0; }
+.nap-item {
+  background: var(--gray-1);
+  border-radius: var(--radius);
+  padding: 14px 16px;
+  border: 1px solid var(--gray-2);
+}
+.nk { font-family: 'IBM Plex Mono', monospace; font-size: 10px; letter-spacing: .12em; text-transform: uppercase; color: var(--gray-3); margin-bottom: 6px; }
+.nv { font-size: 14px; font-family: 'IBM Plex Mono', monospace; }
+
+/* ── LOCATORS ── */
+.loc-table { border: 1px solid var(--gray-2); border-radius: var(--radius); overflow: hidden; margin: 18px 0; }
+.loc-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 20px;
+  border-bottom: 1px solid var(--gray-2);
+  transition: background .15s;
+}
+.loc-row:last-child { border-bottom: none; }
+.loc-row:hover { background: var(--gray-1); }
+.lname { font-weight: 600; font-size: 15px; color: #1a1a1a; }
+.lurl { font-family: 'IBM Plex Mono', monospace; font-size: 12px; color: var(--gray-4); margin-top: 3px; }
+
+/* ── OFFER ── */
+.offer-hero {
+  background: var(--black);
+  border-radius: var(--radius-lg);
+  padding: 48px 52px;
+  margin-bottom: 32px;
+  position: relative;
+  overflow: hidden;
+  border: 1px solid rgba(168,85,247,.25);
+}
+.offer-hero::before {
+  content: '';
+  position: absolute;
+  top: -80px; right: -80px;
+  width: 380px; height: 380px;
+  border: 60px solid rgba(168,85,247,.08);
+  border-radius: 50%;
+  pointer-events: none;
+}
+.offer-hero::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse 60% 80% at 90% 0%, rgba(168,85,247,.12), transparent);
+  pointer-events: none;
+}
+.offer-badge {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 10px;
+  letter-spacing: .2em;
+  text-transform: uppercase;
+  background: var(--accent);
+  color: var(--white);
+  padding: 5px 14px;
+  border-radius: 3px;
+  display: inline-block;
+  margin-bottom: 18px;
+  position: relative;
+  z-index: 1;
+}
+.offer-hero h2 {
+  font-family: 'DM Serif Display', serif;
+  font-size: 36px;
+  font-weight: 400;
+  color: var(--white);
+  line-height: 1.18;
+  margin-bottom: 14px;
+  position: relative;
+  z-index: 1;
+}
+.offer-hero h2 em { color: var(--accent-bright); font-style: italic; }
+.offer-hero p { color: rgba(255,255,255,.5); font-size: 15px; margin-bottom: 0; position: relative; z-index: 1; }
+
+/* SCREENSHOT FRAME */
+.screenshot-container {
+  margin: 28px 0;
+}
+.screenshot-label {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 10px;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+  color: var(--gray-3);
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.screenshot-label::before {
+  content: '';
+  display: block;
+  width: 16px;
+  height: 1px;
+  background: var(--gray-3);
+}
+.screenshot-frame {
+  border: 1px solid var(--gray-2);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  box-shadow: var(--shadow-lg);
+  background: var(--black);
+}
+.screenshot-bar {
+  background: #1a1a2e;
+  padding: 10px 16px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  border-bottom: 1px solid rgba(255,255,255,.06);
+}
+.dot { width: 10px; height: 10px; border-radius: 50%; }
+.dot-r { background: #ff5f57; }
+.dot-y { background: #febc2e; }
+.dot-g { background: #28c840; }
+.screenshot-url {
+  flex: 1;
+  background: rgba(255,255,255,.06);
+  border-radius: 4px;
+  padding: 4px 12px;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 11px;
+  color: rgba(255,255,255,.35);
+  margin-left: 8px;
+}
+.screenshot-frame img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.offer-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin: 28px 0; }
+.offer-card {
+  border-radius: var(--radius-lg);
+  padding: 28px 30px;
+  border: 1px solid var(--gray-2);
+  background: var(--white);
+  box-shadow: var(--shadow-sm);
+  transition: box-shadow .2s;
+}
+.offer-card:hover { box-shadow: var(--shadow-md); }
+.offer-card.featured {
+  border: 2px solid var(--accent);
+  background: #fdf8ff;
+  box-shadow: var(--shadow-accent);
+}
+.offer-card.guarantee-card {
+  background: var(--green-l);
+  border-color: rgba(22,163,74,.25);
+}
+.offer-tag {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 10px;
+  letter-spacing: .15em;
+  text-transform: uppercase;
+  color: var(--gray-3);
+  margin-bottom: 10px;
+}
+.offer-tag.purple { color: var(--accent); }
+.offer-tag.green { color: var(--green); }
+.offer-price {
+  font-family: 'DM Serif Display', serif;
+  font-size: 46px;
+  font-weight: 400;
+  line-height: 1;
+  margin-bottom: 6px;
+}
+.offer-price.strike {
+  font-size: 22px;
+  text-decoration: line-through;
+  color: var(--gray-3);
+  font-family: 'Outfit', sans-serif;
+  font-weight: 400;
+  margin-bottom: 0;
+}
+.offer-price.accent { color: var(--accent); }
+.offer-price.green { color: var(--green); }
+.offer-note { font-size: 13px; color: var(--gray-4); margin-top: 10px; line-height: 1.6; }
+
+.vs-list { list-style: none; margin: 16px 0; }
+.vs-list li {
+  font-size: 15px;
+  color: #222;
+  padding: 8px 0;
+  border-bottom: 1px solid var(--gray-2);
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+  line-height: 1.55;
+}
+.vs-list li:last-child { border-bottom: none; }
+.ico-no { color: var(--gray-3); }
+.ico-yes { color: var(--green); font-weight: 700; }
+
+.payment-row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin: 22px 0; }
+.payment-card {
+  background: var(--gray-1);
+  border-radius: var(--radius);
+  padding: 22px 24px;
+  border: 1px solid var(--gray-2);
+  text-align: center;
+}
+.payment-pct {
+  font-family: 'DM Serif Display', serif;
+  font-size: 48px;
+  font-weight: 400;
+  color: var(--accent);
+  line-height: 1;
+  margin-bottom: 6px;
+}
+.payment-label { font-size: 16px; color: #2e2e2e; font-weight: 600; }
+.payment-when { font-size: 14px; color: var(--gray-4); margin-top: 5px; }
+
+/* RETAINER DISCOUNT */
+.retainer-hero {
+  background: var(--black);
+  border-radius: var(--radius-lg);
+  padding: 36px 40px;
+  margin: 20px 0 0;
+  border: 1px solid rgba(22,163,74,.25);
+  position: relative;
+  overflow: hidden;
+}
+.retainer-hero::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse 50% 80% at 90% 50%, rgba(22,163,74,.08), transparent);
+  pointer-events: none;
+}
+.retainer-tag {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 10px;
+  letter-spacing: .2em;
+  text-transform: uppercase;
+  background: rgba(22,163,74,.15);
+  color: #4ade80;
+  border: 1px solid rgba(22,163,74,.3);
+  padding: 4px 12px;
+  border-radius: 3px;
+  display: inline-block;
+  margin-bottom: 18px;
+  position: relative;
+}
+.retainer-price-row {
+  display: flex;
+  align-items: baseline;
+  gap: 16px;
+  margin: 4px 0 16px;
+  position: relative;
+}
+.retainer-strike {
+  font-family: 'DM Serif Display', serif;
+  font-size: 26px;
+  color: rgba(255,255,255,.25);
+  text-decoration: line-through;
+}
+.retainer-price {
+  font-family: 'DM Serif Display', serif;
+  font-size: 54px;
+  color: #4ade80;
+  line-height: 1;
+}
+.retainer-per {
+  font-size: 18px;
+  color: rgba(255,255,255,.4);
+  font-weight: 300;
+}
+.retainer-desc {
+  font-size: 17px;
+  color: rgba(255,255,255,.78);
+  line-height: 1.75;
+  max-width: 500px;
+  position: relative;
+}
+.retainer-desc strong { color: #4ade80; }
+
+/* GUARANTEE BOX */
+.guarantee-final {
+  background: var(--black);
+  border-radius: var(--radius-lg);
+  padding: 36px 40px;
+  margin-top: 32px;
+  border: 1px solid rgba(168,85,247,.25);
+  position: relative;
+  overflow: hidden;
+}
+.guarantee-final::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse 50% 80% at 10% 50%, rgba(168,85,247,.08), transparent);
+  pointer-events: none;
+}
+.gtag {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 10px;
+  letter-spacing: .22em;
+  text-transform: uppercase;
+  color: var(--accent-bright);
+  margin-bottom: 14px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  position: relative;
+}
+.gtag::before { content: ''; display: block; width: 16px; height: 1px; background: var(--accent); }
+.guarantee-final p {
+  color: rgba(255,255,255,.82);
+  font-size: 17px;
+  line-height: 1.85;
+  margin: 0;
+  position: relative;
+}
+.guarantee-final strong { color: var(--white); }
+.guarantee-final em { color: var(--accent-bright); font-style: normal; }
+
+/* ── FOOTER ── */
+.footer {
+  background: var(--black);
+  color: var(--gray-3);
+  padding: 28px 64px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 13px;
+  border-top: 1px solid rgba(168,85,247,.15);
+}
+.flogo img {
+  height: 32px;
+  display: block;
+  filter: brightness(0) invert(1);
+}
+.footer-right { text-align: right; line-height: 1.8; }
+
+/* ── RESPONSIVE ── */
+@media (max-width: 760px) {
+  .topbar { padding: 0 20px; }
+  .topbar-nav { display: none; }
+  .cover { padding: 56px 24px 48px; }
+  .cover h1 { font-size: 36px; }
+  .wrap { padding: 0 20px; }
+  .g2, .g3, .nap-grid, .bot-grid, .strat-grid, .offer-grid, .payment-row { grid-template-columns: 1fr; }
+  .flow { flex-direction: column; }
+  .fstep + .fstep::before { content: '↓'; left: 50%; top: -12px; transform: translateX(-50%); }
+  .footer { padding: 20px 20px; flex-direction: column; gap: 10px; text-align: center; }
+  .footer-right { text-align: center; }
+  .offer-hero { padding: 28px 24px; }
+  .retainer-hero { padding: 24px 20px; }
+  .guarantee-final { padding: 24px 20px; }
+  .cover-meta-item { padding: 0 24px 0 0; }
+}
+</style>
+</head>
+<body>
+
+<!-- STICKY TOPBAR -->
+<nav class="topbar">
+  <div class="topbar-logo"><img src="logo-vextria.png" alt="Vextria"></div>
+  <ul class="topbar-nav">
+    <li><a href="#posicionamiento">01 — IA</a></li>
+    <li><a href="#auditoria">02 — Auditoría</a></li>
+    <li><a href="#metodologia">03 — Metodología</a></li>
+    <li><a href="#oferta">04 — Oferta</a></li>
+  </ul>
+</nav>
+
+<!-- COVER -->
+<div class="cover">
+  <div class="cover-bg"></div>
+  <div class="cover-grid"></div>
+  <div class="cover-ring"></div>
+  <div class="cover-ring-2"></div>
+  <div class="cover-content">
+    <div class="eyebrow">Vextria × La Torre de Karin · Auditoría GEO / AEO / SEO · Abril 2026</div>
+    <h1>Posiciónate donde<br>buscan <em>tus clientes</em></h1>
+    <div class="cover-sub">Análisis completo de visibilidad en modelos de inteligencia artificial y motores de búsqueda</div>
+    <div class="cover-meta">
+      <div class="cover-meta-item"><div class="ml">Cliente</div><div class="mv">La Torre de Karin</div></div>
+      <div class="cover-meta-item"><div class="ml">Dominio</div><div class="mv">latorrekarinstore.es</div></div>
+      <div class="cover-meta-item"><div class="ml">Sector</div><div class="mv">TCG · Retail Gaming · Zaragoza</div></div>
+      <div class="cover-meta-item"><div class="ml">Elaborado por</div><div class="mv">Diego Carrodeguas · Vextria</div></div>
+    </div>
+  </div>
+</div>
+
+<div class="wrap">
+
+<!-- ══ 01 · CÓMO FUNCIONA LA IA ══ -->
+<div class="section" id="posicionamiento">
+  <div class="sec-eyebrow">01 — Posicionamiento en IA</div>
+  <div class="sec-title">El posicionamiento en IA<br><em>parte del posicionamiento tradicional</em></div>
+  <p class="sec-intro">Todo lo que siempre ha funcionado en Google sigue siendo necesario. Los modelos de IA van más allá — necesitan además que tu negocio sea verificable.</p>
+
+  <h3>Las bases del SEO — necesarias para Google y para IA</h3>
+  <div class="g2">
+    <div class="card">
+      <div class="clabel">Investigación de palabras clave</div>
+      <ul class="blist blist-sm" style="margin:0;">
+        <li>Qué buscan tus clientes exactamente</li>
+        <li>Variaciones locales: "Zaragoza", "cerca de mí"</li>
+        <li>Intención de búsqueda: comprar, comparar, aprender</li>
+      </ul>
+    </div>
+    <div class="card">
+      <div class="clabel">Velocidad y Core Web Vitals</div>
+      <ul class="blist blist-sm" style="margin:0;">
+        <li>Google penaliza webs lentas directamente</li>
+        <li>Los bots de IA ignoran webs que no cargan bien</li>
+        <li>Tiempo de carga, estabilidad visual, interactividad</li>
+      </ul>
+    </div>
+    <div class="card">
+      <div class="clabel">Contenido original y sin duplicidades</div>
+      <ul class="blist blist-sm" style="margin:0;">
+        <li>Si copias contenido, Google te penaliza</li>
+        <li>Contenido específico sobre lo que vendes</li>
+        <li>Actualizado con frecuencia</li>
+      </ul>
+    </div>
+    <div class="card">
+      <div class="clabel">Perfil de enlaces (backlinks)</div>
+      <ul class="blist blist-sm" style="margin:0;">
+        <li>Otras webs que enlazan a la tuya = votos de confianza</li>
+        <li>Cantidad + calidad + relevancia del sector</li>
+      </ul>
+    </div>
+    <div class="card">
+      <div class="clabel">Presencia local verificada</div>
+      <ul class="blist blist-sm" style="margin:0;">
+        <li>Google Business Profile correcto y activo</li>
+        <li>Nombre, dirección y teléfono idénticos en todas partes</li>
+      </ul>
+    </div>
+    <div class="card">
+      <div class="clabel">Arquitectura técnica limpia</div>
+      <ul class="blist blist-sm" style="margin:0;">
+        <li>URLs limpias, sin errores 404, sin duplicados</li>
+        <li>Sitemap correcto, robots.txt bien configurado</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="box box-info">Todo esto es necesario para posicionar en Google y en IA — pero <strong>no es suficiente para el posicionamiento en modelos de inteligencia artificial</strong>. Los modelos necesitan además poder verificar que tu negocio es real, legítimo y autorizado en el sector.</div>
+
+  <hr>
+  <h3>El flujo completo — de la pregunta a la respuesta</h3>
+  <div class="flow">
+    <div class="fstep"><div class="ficon">🧑</div><div class="flabel">Usuario</div><div class="fdesc">"Mejor tienda TCG en Zaragoza"</div></div>
+    <div class="fstep fhl"><div class="ficon">🤖</div><div class="flabel">Modelo IA</div><div class="fdesc">Interpreta la intención</div></div>
+    <div class="fstep"><div class="ficon">🗄️</div><div class="flabel">Knowledge Graph</div><div class="fdesc">Busca en su memoria interna</div></div>
+    <div class="fstep"><div class="ficon">🌐</div><div class="flabel">Búsqueda web</div><div class="fdesc">Si lo activa, crawlea en tiempo real</div></div>
+    <div class="fstep fhl"><div class="ficon">💬</div><div class="flabel">Respuesta</div><div class="fdesc">Recomienda lo que puede verificar</div></div>
+  </div>
+
+  <ul class="blist">
+    <li>El <strong>Knowledge Graph</strong> es la memoria del modelo. Todo lo que aprendió durante su entrenamiento está guardado aquí.</li>
+  </ul>
+
+  <hr>
+  <h3>Cada modelo tiene su propio bot (crawler) y su propio ritmo</h3>
+  <div class="bot-grid">
+    <div class="bot-card">
+      <div class="bname">Googlebot</div>
+      <div class="bmodel">Google Search / AI Overviews</div>
+      <div class="sbar" style="background:var(--gray-3);width:40%;"></div>
+      <div class="btime-row">
+        <span class="btime-pill pill-first">2–6 sem</span>
+        <span class="btime-pill pill-solid">3–6 meses+</span>
+      </div>
+      <div class="bnote">Base de todo el SEO clásico. Primeras señales rápidas, posicionamiento sólido requiere tiempo.</div>
+    </div>
+    <div class="bot-card">
+      <div class="bname">PerplexityBot</div>
+      <div class="bmodel">Perplexity</div>
+      <div class="sbar" style="background:var(--green);width:100%;"></div>
+      <div class="btime-row">
+        <span class="btime-pill pill-first">2–4 sem</span>
+        <span class="btime-pill pill-solid">1–3 meses+</span>
+      </div>
+      <div class="bnote">El más rápido. Primeras apariciones en semanas, resultados sólidos en meses.</div>
+    </div>
+    <div class="bot-card">
+      <div class="bname">Googlebot</div>
+      <div class="bmodel">Gemini / Google AI</div>
+      <div class="sbar" style="background:var(--teal);width:70%;"></div>
+      <div class="btime-row">
+        <span class="btime-pill pill-first">2–6 sem</span>
+        <span class="btime-pill pill-solid">3–6 meses+</span>
+      </div>
+      <div class="bnote">Hereda el índice de Google. Alta frecuencia de actualización.</div>
+    </div>
+    <div class="bot-card">
+      <div class="bname">Bingbot + GPTBot</div>
+      <div class="bmodel">ChatGPT Search</div>
+      <div class="sbar" style="background:var(--blue);width:55%;"></div>
+      <div class="btime-row">
+        <span class="btime-pill pill-first">2–8 sem</span>
+        <span class="btime-pill pill-solid">3–6 meses+</span>
+      </div>
+      <div class="bnote">Bingbot para búsqueda web, GPTBot para Knowledge Graph. <strong>Bing Webmaster Tools</strong> = impacto inmediato.</div>
+    </div>
+  </div>
+
+  <div class="box box-blue" style="font-size:14px;">
+    <strong>Primeras señales</strong> — aparecen cuando la plataforma descubre, entiende y empieza a citar tu contenido.<br>
+    <strong>Posicionamiento razonable</strong> — llega cuando el sitio demuestra consistencia, autoridad y actualización continua.
+  </div>
+
+  <ul class="blist">
+    <li><strong>Bing Webmaster Tools</strong> — impacto inmediato en ChatGPT modo búsqueda web</li>
+  </ul>
+
+  <hr>
+  <h3>Cómo funciona un crawler — demostración con Screaming Frog</h3>
+  <div class="csteps">
+    <div class="csrow"><div class="csnum">1</div><div class="cstxt">El robot entra por la home de tu web<span>Como un cliente que abre la puerta principal</span></div></div>
+    <div class="csrow"><div class="csnum">2</div><div class="cstxt">Lee el código fuente — lo que hay debajo del diseño<span>No ve el diseño bonito. Ve la estructura de datos, los archivos técnicos, el carnet de identidad</span></div></div>
+    <div class="csrow"><div class="csnum">3</div><div class="cstxt">Sigue todos los enlaces internos y los recorre uno por uno<span>Cada página, cada producto, cada categoría</span></div></div>
+    <div class="csrow"><div class="csnum">4</div><div class="cstxt">Detecta errores, contenido duplicado, páginas bloqueadas<span>Todo lo que está roto o mal configurado</span></div></div>
+    <div class="csrow"><div class="csnum">5</div><div class="cstxt">Construye un mapa completo y decide cómo posicionarte<span>Con ese mapa determina qué indexar, qué ignorar y en qué posición aparecer</span></div></div>
+  </div>
+</div>
+
+<!-- ══ 02 · AUDITORÍA WEB ══ -->
+<div class="section" id="auditoria">
+  <div class="sec-eyebrow">02 — Auditoría de tu web</div>
+  <div class="sec-title">Lo que tiene<br><em>La Torre de Karin hoy</em></div>
+  <p class="sec-intro">Datos reales de latorrekarinstore.es analizados con herramientas profesionales.</p>
+
+  <div class="link-row">
+    <a class="ext-link" href="https://builtwith.com/latorrekarinstore.es" target="_blank">BuiltWith</a>
+    <a class="ext-link" href="https://latorrekarinstore.es/robots.txt" target="_blank">robots.txt</a>
+    <a class="ext-link" href="https://latorrekarinstore.es/sitemap.xml" target="_blank">sitemap.xml</a>
+    <a class="ext-link" href="https://spetrace.com" target="_blank">SPE Trace</a>
+    <a class="ext-link" href="https://search.google.com/test/rich-results?url=https://latorrekarinstore.es" target="_blank">Schema Validator</a>
+  </div>
+
+  <h3>Stack tecnológico</h3>
+  <div class="box box-bad">23 plugins activos en WordPress. Cada plugin es una puerta — si uno no se actualiza o lo abandonan, es una vulnerabilidad. Causa número uno de hackeos en WordPress.</div>
+  <div class="box box-bad">All in One SEO 4.9.5.1 — plugin básico. No genera el carnet de identidad correcto para la IA. <strong>Propuesta: migrar a Rank Math Pro + Yoast SEO</strong>, los dos estándares del sector con soporte completo de schema LocalBusiness.</div>
+  <div class="box box-ok">Cloudflare CDN activo — distribución de contenido y protección básica activadas.</div>
+  <div class="box box-ok">WooCommerce actualizado — el e-commerce funciona correctamente.</div>
+  <div class="box box-amber" style="margin-top:4px;"><strong>Importante:</strong> revisa siempre cuándo fue la última actualización de tus plugins. Un plugin desactualizado es una vulnerabilidad activa.</div>
+
+  <hr>
+  <h3>robots.txt — análisis del archivo actual</h3>
+  <p>URL directa: <a href="https://latorrekarinstore.es/robots.txt" target="_blank" style="color:var(--accent);">latorrekarinstore.es/robots.txt</a></p>
+  <div class="codeblock">
+    <div><span class="cok">User-agent: *</span></div>
+    <div><span class="cok">Disallow: /wp-content/uploads/wc-logs/</span>  <span class="cmt">← correcto</span></div>
+    <div><span class="cok">Disallow: /wp-admin/</span>                     <span class="cmt">← correcto</span></div>
+    <div><span class="cok">Allow: /wp-admin/admin-ajax.php</span>          <span class="cmt">← necesario para WooCommerce</span></div>
+    <br>
+    <div><span class="cba">Sitemap: .../sitemap.rss</span>  <span class="warn">⚠ dos sitemaps: el .rss no es estándar SEO</span></div>
+    <div><span class="cba">— Sin LLMs.txt</span>            <span class="warn">⚠ los bots de IA no tienen instrucciones específicas</span></div>
+  </div>
+  <ul class="blist">
+    <li>Tu web no da indicaciones a ChatGPT, Gemini ni Perplexity — no existe el archivo LLMs.txt. Esto resta posicionamiento en IA directamente.</li>
+  </ul>
+
+  <hr>
+  <h3>JSON-LD — carnet de identidad para los bots</h3>
+  <p>Ver en directo: clic derecho → <code>Ver código fuente</code> → buscar <code>application/ld+json</code></p>
+
+  <div class="g2" style="margin-top:18px;">
+    <div>
+      <div style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--red);margin-bottom:12px;">Lo que tiene ahora</div>
+      <div class="codeblock" style="font-size:11px;">
+        <div><span class="cba">"@type": "Organization"</span>  <span class="warn" style="font-size:11px;">no LocalBusiness</span></div>
+        <div><span class="cba">"name": "La Torre Karin Store"</span> <span class="warn" style="font-size:11px;">nombre inconsistente</span></div>
+        <div><span class="cba">"description": "Tienda online de</span></div>
+        <div><span class="cba"> productos de anime"</span>  <span class="warn" style="font-size:11px;">sin TCG, sin torneos</span></div>
+        <br>
+        <div><span class="cba">— Sin address</span></div>
+        <div><span class="cba">— Sin telephone</span></div>
+        <div><span class="cba">— Sin openingHours</span></div>
+        <div><span class="cba">— Sin sameAs</span>  <span class="warn" style="font-size:11px;">sin WPN, Cardmarket, Pokémon OP</span></div>
+      </div>
+    </div>
+    <div>
+      <div style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--green);margin-bottom:12px;">Lo que implementamos</div>
+      <div class="codeblock" style="font-size:11px;">
+        <div><span class="cok">"@type": "LocalBusiness"</span></div>
+        <div><span class="cok">"name": "La Torre de Karin"</span></div>
+        <div><span class="cok">"description": "Tienda TCG en</span></div>
+        <div><span class="cok"> Zaragoza: Pokémon, Magic,</span></div>
+        <div><span class="cok"> One Piece, torneos..."</span></div>
+        <div><span class="cok">"address": { PostalAddress }</span></div>
+        <div><span class="cok">"openingHours": [...]</span></div>
+        <div><span class="cok">"sameAs": [</span></div>
+        <div><span class="cok">  wpn.wizards.com/...,</span></div>
+        <div><span class="cok">  cardmarket.com/...,</span></div>
+        <div><span class="cok">  op.pokemon.com/...</span></div>
+        <div><span class="cok">]</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="link-row">
+    <a class="ext-link" href="https://search.google.com/test/rich-results?url=https://latorrekarinstore.es" target="_blank">Validar Schema en Google</a>
+    <a class="ext-link" href="https://validator.schema.org" target="_blank">Schema.org Validator</a>
+  </div>
+</div>
+
+<!-- ══ 03 · METODOLOGÍA VEXTRIA ══ -->
+<div class="section" id="metodologia">
+  <div class="sec-eyebrow">03 — Metodología Vextria</div>
+  <div class="sec-title">Cómo te posicionamos<br><em>en los modelos de IA</em></div>
+
+  <ul class="blist">
+    <li>5 módulos que se construyen uno encima del otro — <strong>SEO completo obligatorio</strong> como base</li>
+  </ul>
+
+  <hr>
+
+  <!-- MÓDULO 1 -->
+  <div class="module">
+    <div class="mnum">Módulo 01</div>
+    <div class="mtitle">Arquitectura Web AI-Native</div>
+    <p>La base de todo. Necesitas una web que no consuma el <strong>crawl budget (presupuesto de rastreo)</strong> de los bots en código innecesario. Trabajamos con <strong>Cloudflare</strong> como proveedor de infraestructura — el mismo que usan las webs más grandes del mundo.</p>
+  </div>
+
+  <h3>Next.js, React y Tailwind</h3>
+  <div class="g3" style="margin:18px 0;">
+    <div class="card">
+      <div class="clabel">Next.js — el motor</div>
+      <ul class="blist blist-sm" style="margin:0;">
+        <li>Genera HTML estático antes de que nadie lo pida</li>
+        <li>El bot llega y encuentra todo listo — <strong>no espera a JavaScript</strong></li>
+        <li>Más rápido, mejor indexado, más visible para la IA</li>
+      </ul>
+    </div>
+    <div class="card">
+      <div class="clabel">Tailwind CSS — diseño sin peso</div>
+      <ul class="blist blist-sm" style="margin:0;">
+        <li><strong>Solo carga el CSS que usa cada página</strong></li>
+        <li>WordPress carga todo el CSS de todos los plugins siempre</li>
+        <li>Resultado: páginas más ligeras y mejor posicionadas</li>
+      </ul>
+    </div>
+    <div class="card">
+      <div class="clabel">React — componentes inteligentes</div>
+      <ul class="blist blist-sm" style="margin:0;">
+        <li>La web se construye por piezas independientes con nombre propio</li>
+        <li>El bot ve un índice claro: Header, Producto, Footer</li>
+        <li>No gasta crawl budget en divs sin significado</li>
+      </ul>
+    </div>
+  </div>
+
+  <h3>WordPress vs React — lo que ve el bot</h3>
+  <div class="g2">
+    <div>
+      <div style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--red);margin-bottom:12px;">WordPress — divs sin significado</div>
+      <div class="tree">
+        <div class="t-root">&lt;body&gt;</div>
+        <div style="padding-left:16px;"><span class="t-div">&lt;div class="wrapper"&gt;</span></div>
+        <div style="padding-left:32px;"><span class="t-div">&lt;div class="inner"&gt;</span></div>
+        <div style="padding-left:48px;"><span class="t-div">&lt;div class="content"&gt;</span>  <span class="cmt">← ¿qué es?</span></div>
+        <div style="padding-left:64px;"><span class="t-div">&lt;div class="widget"&gt;</span>   <span class="cmt">← ¿qué es?</span></div>
+        <div style="padding-left:80px;"><span class="t-div">&lt;div class="item"&gt;</span>     <span class="cmt">← sin contexto</span></div>
+        <div style="padding-left:48px;"><span class="t-div">&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;</span></div>
+        <div class="t-root">&lt;/body&gt;</div>
+      </div>
+    </div>
+    <div>
+      <div style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--green);margin-bottom:12px;">React — componentes con nombre propio</div>
+      <div class="tree">
+        <div class="t-root">&lt;App&gt;</div>
+        <div style="padding-left:16px;"><span class="t-comp">&lt;Header /&gt;</span>          <span class="cmt">← cabecera</span></div>
+        <div style="padding-left:16px;"><span class="t-comp">&lt;NavMenu /&gt;</span>         <span class="cmt">← navegación</span></div>
+        <div style="padding-left:16px;"><span class="t-comp">&lt;ProductCard /&gt;</span>    <span class="cmt">← producto</span></div>
+        <div style="padding-left:32px;"><span class="t-comp">&lt;Title /&gt;</span>          <span class="cmt">← título</span></div>
+        <div style="padding-left:32px;"><span class="t-comp">&lt;Price /&gt;</span>          <span class="cmt">← precio</span></div>
+        <div style="padding-left:16px;"><span class="t-comp">&lt;Footer /&gt;</span>         <span class="cmt">← pie</span></div>
+        <div class="t-root">&lt;/App&gt;</div>
+      </div>
+    </div>
+  </div>
+
+  <table style="margin-top:22px;">
+    <thead>
+      <tr>
+        <th style="width:22%">Factor</th>
+        <th class="td-wp">WordPress / Wix</th>
+        <th class="td-html">HTML + CSS + JS</th>
+        <th class="td-next">Next.js + React + Tailwind</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td><strong>Velocidad</strong></td><td class="td-wp"><span class="cross">Lenta</span> — plugins + base de datos</td><td class="td-html"><span class="mid">Media</span></td><td class="td-next"><span class="check">Muy rápida</span> — HTML estático</td></tr>
+      <tr><td><strong>Seguridad</strong></td><td class="td-wp"><span class="cross">Alta exposición</span> — 23 plugins</td><td class="td-html"><span class="mid">Media</span></td><td class="td-next"><span class="check">Mínima superficie</span> — sin plugins</td></tr>
+      <tr><td><strong>Legible por IA</strong></td><td class="td-wp"><span class="cross">Parcial</span> — divs sin significado</td><td class="td-html"><span class="mid">Mejor</span></td><td class="td-next"><span class="check">Óptimo</span> — componentes + schema</td></tr>
+      <tr><td><strong>Tu e-commerce</strong></td><td class="td-wp"><span class="check">Lo gestionas tú</span></td><td class="td-html">—</td><td class="td-next"><span class="check">Lo sigues gestionando tú</span> en /tienda/</td></tr>
+    </tbody>
+  </table>
+
+  <div class="box box-info"><strong>Propuesta:</strong> Añadimos la arquitectura AI-Native por encima de tu WordPress actual. Tu WooCommerce sigue funcionando exactamente igual — no tocamos nada. La nueva capa vive encima y es lo que los bots indexan primero.</div>
+
+  <hr>
+
+  <!-- MÓDULO 2 -->
+  <div class="module">
+    <div class="mnum">Módulo 02</div>
+    <div class="mtitle">SEO Técnico</div>
+  </div>
+
+  <ul class="blist">
+    <li><strong>robots.txt</strong> — directrices que la página web da a los bots. Decide qué pueden indexar y qué no. Es el índice de tu web para los bots.</li>
+    <li><strong>Schema markup (JSON-LD)</strong> — el DNI digital de tu tienda para los bots de IA y de Google. Tiene toda tu información valiosa.</li>
+    <li><strong>Sitemap</strong> — el índice que lee el bot para saber qué páginas existen y cuáles son prioritarias.</li>
+    <li><strong>LLMs.txt</strong> — el nuevo estándar para el posicionamiento en IA. Es el nuevo robots.txt, pero para modelos de lenguaje.</li>
+    <li><strong>Bing Webmaster Tools activo</strong> — impacto inmediato en ChatGPT modo búsqueda web.</li>
+  </ul>
+
+  <hr>
+
+  <!-- MÓDULO 3 -->
+  <div class="module">
+    <div class="mnum">Módulo 03</div>
+    <div class="mtitle">SEO Local</div>
+  </div>
+
+  <ul class="blist">
+    <li><strong>Google Business Profile</strong> — cobertura semántica correcta con palabras clave del sector</li>
+    <li><strong>Mínimo 5 imágenes geolocalizadas</strong> — datos de ubicación embebidos en cada foto</li>
+    <li><strong>Archivo NAP.md</strong> — documento maestro con Nombre, Dirección, Teléfono y todos los datos para replicar de forma idéntica en todos los directorios y en toda la web</li>
+    <li><strong>Alta en localizadores sectoriales</strong> — WPN, Pokémon OP, Bandai, Cardmarket y directorios locales</li>
+  </ul>
+
+  <div class="loc-table">
+    <div class="loc-row"><div><div class="lname">WPN — Wizards Play Network</div><div class="lurl">wpn.wizards.com/es/locator</div></div><a class="ext-link" href="https://wpn.wizards.com/es/locator" target="_blank">Verificar</a></div>
+    <div class="loc-row"><div><div class="lname">Pokémon OP — localizador oficial</div><div class="lurl">op.pokemon.com/es-es/find-a-league</div></div><a class="ext-link" href="https://op.pokemon.com/es-es/find-a-league" target="_blank">Verificar</a></div>
+    <div class="loc-row"><div><div class="lname">Cardmarket — perfil de tienda</div><div class="lurl">cardmarket.com</div></div><a class="ext-link" href="https://www.cardmarket.com" target="_blank">Verificar</a></div>
+    <div class="loc-row"><div><div class="lname">Bandai — localizador oficial</div><div class="lurl">en.bandai.com/where-to-buy</div></div><a class="ext-link" href="https://en.bandai.com" target="_blank">Verificar</a></div>
+  </div>
+
+  <hr>
+
+  <!-- MÓDULO 4 -->
+  <div class="module">
+    <div class="mnum">Módulo 04</div>
+    <div class="mtitle">On-Page + Protocolo 360 GEO/AEO/SEO</div>
+    <p>Nuestra metodología para posicionarte directamente como autoridad en los modelos de IA. Utilizamos <strong>NotebookLM</strong> como base de datos de análisis semántico, conectado a nuestras herramientas propias <strong>Google AntiGravity</strong> y <strong>Cloud Decode</strong>, lo que nos permite extraer y procesar toda la información del sector de forma directa y automatizada.</p>
+  </div>
+
+  <div class="strat-grid">
+    <div class="strat">
+      <div class="sname">Investigación semántica de la competencia</div>
+      <ul class="sbullets">
+        <li>Analizamos la cobertura semántica del sector con NotebookLM</li>
+        <li>Identificamos los gaps — lo que nadie está respondiendo</li>
+        <li>Esos gaps son las oportunidades de posicionamiento</li>
+      </ul>
+    </div>
+    <div class="strat">
+      <div class="sname">Chunking semántico</div>
+      <ul class="sbullets">
+        <li>Dividimos el contenido en bloques de significado</li>
+        <li>La IA lee por trozos, no por páginas enteras</li>
+        <li>Cada bloque responde una pregunta concreta</li>
+      </ul>
+    </div>
+    <div class="strat">
+      <div class="sname">QAB Framework</div>
+      <ul class="sbullets">
+        <li>Pregunta — Afirmación — Bloque de conocimiento</li>
+        <li>Estructuramos el contenido exactamente como la IA lo extrae</li>
+        <li>Cada sección puede citarse de forma independiente</li>
+      </ul>
+    </div>
+    <div class="strat">
+      <div class="sname">Tablas de entidad</div>
+      <ul class="sbullets">
+        <li>Formato favorito de la IA para extraer datos</li>
+        <li>Permiten responder múltiples preguntas con una sola tabla</li>
+        <li>La IA las cita directamente en sus respuestas</li>
+      </ul>
+    </div>
+    <div class="strat">
+      <div class="sname">Vectorización de contenido</div>
+      <ul class="sbullets">
+        <li>Los modelos convierten cada palabra en un número (vector)</li>
+        <li>Palabras similares tienen vectores cercanos: "Magic" y "MTG" son lo mismo para la IA</li>
+        <li>Usamos todas las variantes semánticas de cada término</li>
+        <li>Resultado: el contenido aparece ante más variaciones de búsqueda</li>
+      </ul>
+    </div>
+    <div class="strat">
+      <div class="sname">Co-citation building</div>
+      <ul class="sbullets">
+        <li>Enlazamos a fuentes de autoridad del sector desde tu blog</li>
+        <li>Wizards.com, Pokémon.com, Cardmarket, foros TCG de referencia</li>
+        <li>La IA interpreta que citas fuentes fiables y estás relacionado con ellas</li>
+      </ul>
+    </div>
+    <div class="strat">
+      <div class="sname">Freshness signaling</div>
+      <ul class="sbullets">
+        <li>Actualizamos el contenido existente de forma progresiva</li>
+        <li>La IA prioriza el contenido actualizado como de mayor calidad</li>
+        <li>Pequeñas actualizaciones con datos nuevos son suficientes</li>
+      </ul>
+    </div>
+    <div class="strat">
+      <div class="sname">Passage indexing</div>
+      <ul class="sbullets">
+        <li>Cada párrafo tiene sentido por sí solo, sin depender del resto</li>
+        <li>❌ "Como mencionamos anteriormente, Magic es un juego..."</li>
+        <li>✅ "Magic: The Gathering es un juego TCG con torneos semanales en La Torre de Karin, Zaragoza"</li>
+        <li>La IA extrae ese párrafo solo y lo cita correctamente</li>
+      </ul>
+    </div>
+    <div class="strat">
+      <div class="sname">Entity Authority Injection — E-E-A-T</div>
+      <ul class="sbullets">
+        <li><strong>E-E-A-T</strong> — Experience, Expertise, Authoritativeness, Trustworthiness. Estándar de Google y de todos los bots.</li>
+        <li>Experiencia propia: fotos reales de torneos, resultados, comunidad</li>
+        <li>Expertise: guías específicas de los juegos que vendes</li>
+        <li>Autoridad: certificaciones WPN, Pokémon OP, menciones verificables</li>
+        <li>Confianza: reseñas reales, NAP consistente, datos verificables</li>
+      </ul>
+    </div>
+    <div class="strat">
+      <div class="sname">Schema markup embebido</div>
+      <ul class="sbullets">
+        <li>Cada artículo incluye JSON-LD con entidades y relaciones</li>
+        <li>Datos legibles por máquina — no solo texto que la IA interpreta</li>
+        <li>Event schema para torneos, Product schema, LocalBusiness</li>
+      </ul>
+    </div>
+    <div class="strat">
+      <div class="sname">Interlinking semántico (Topic Clusters)</div>
+      <ul class="sbullets">
+        <li>Conectamos todo el contenido en un hub con sentido</li>
+        <li>Pillar page → subcontenidos relacionados</li>
+        <li>Ejemplo: "Guía Pokémon TCG" → "Torneos Pokémon Zaragoza" → "Cómo preparar tu primer mazo"</li>
+        <li>El bot sigue los enlaces y entiende la jerarquía del conocimiento</li>
+      </ul>
+    </div>
+    <div class="strat">
+      <div class="sname">SEO Off-Page + Alta en directorios</div>
+      <ul class="sbullets">
+        <li>Enlaces que apuntan a tu web desde directorios del sector</li>
+        <li>Cada enlace externo es un voto de confianza verificable</li>
+        <li>WPN, Pokémon OP, Bandai, directorios locales, foros TCG</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<!-- ══ 04 · OFERTA ══ -->
+<div class="section" id="oferta">
+  <div class="sec-eyebrow">04 — Oferta La Torre de Karin</div>
+
+  <div class="offer-hero">
+    <div class="offer-badge">Oferta exclusiva · Primer cliente TCG</div>
+    <h2>Vextria System<br><em>al precio del Starter</em></h2>
+    <p>El sistema completo de posicionamiento en IA — arquitectura AI-Native incluida — al precio del plan de entrada. Sin letra pequeña.</p>
+  </div>
+
+  <!-- PRECIOS ACTUALES -->
+  <div class="screenshot-container">
+    <div class="screenshot-label">Precios actuales — vextria.es</div>
+    <div class="screenshot-frame">
+      <div class="screenshot-bar">
+        <div class="dot dot-r"></div>
+        <div class="dot dot-y"></div>
+        <div class="dot dot-g"></div>
+        <div class="screenshot-url">vextria.es/#pricing</div>
+      </div>
+      <img src="Captura de pantalla 2026-04-03 001040.png" alt="Precios actuales Vextria — Starter 950€, Vextria System 1.450€, Enterprise 5.000€+">
+    </div>
+  </div>
+
+  <!-- GARANTIA PRECIO -->
+  <div class="box box-teal" style="font-size:15px; margin-bottom:32px; margin-top:8px;">
+    <strong>Garantía de precio:</strong> Si encuentras cualquier servicio equivalente — incluso SEO tradicional — a un precio más bajo, te lo mejoramos un <strong>25%</strong>. Estamos seguros de que nuestros precios son los más competitivos del mercado para lo que ofrecemos.
+  </div>
+
+  <!-- COMPARATIVA STARTER vs VEXTRIA -->
+  <h3>Starter System vs Vextria System — qué incluye cada uno</h3>
+  <div class="offer-grid">
+    <div class="offer-card">
+      <div class="offer-tag">Starter System</div>
+      <div class="offer-price strike">950€</div>
+      <ul class="vs-list" style="margin-top:16px;">
+        <li><span class="ico-yes">✓</span> Arquitectura web AI-Native</li>
+        <li><span class="ico-yes">✓</span> SEO técnico completo</li>
+        <li><span class="ico-yes">✓</span> Posicionamiento en LLMs</li>
+        <li><span class="ico-yes">✓</span> Schema LocalBusiness</li>
+        <li><span class="ico-yes">✓</span> Alta en localizadores de autoridad</li>
+        <li><span class="ico-no">—</span> Plan de ataque estratégico</li>
+        <li><span class="ico-no">—</span> Protocolo 360 GEO/AEO/SEO</li>
+        <li><span class="ico-no">—</span> SEO Local Pro</li>
+        <li><span class="ico-no">—</span> Neuro-Marketing y conversión</li>
+        <li><span class="ico-no">—</span> Chatbot IA</li>
+        <li><span class="ico-no">—</span> Tracking avanzado Data-Driven</li>
+      </ul>
+    </div>
+    <div class="offer-card featured">
+      <div class="offer-tag purple">Vextria System — lo que recibes</div>
+      <div class="offer-price strike" style="font-size:20px; color:var(--gray-3);">1.450€</div>
+      <div class="offer-price accent" style="font-size:52px;">950€</div>
+      <ul class="vs-list" style="margin-top:16px;">
+        <li><span class="ico-yes">✓</span> Todo lo del Starter System</li>
+        <li><span class="ico-yes">✓</span> <strong>Plan de ataque estratégico</strong></li>
+        <li><span class="ico-yes">✓</span> <strong>Protocolo 360 GEO/AEO/SEO</strong> <span style="font-size:13px;color:var(--gray-3);">(inyección de 5 artículos AI Injection / Entity Authority Injection)</span></li>
+        <li><span class="ico-yes">✓</span> <strong>SEO Local Pro</strong></li>
+        <li><span class="ico-yes">✓</span> <strong>Neuro-Marketing y conversión</strong></li>
+        <li><span class="ico-yes">✓</span> <strong>Chatbot IA</strong></li>
+        <li><span class="ico-yes">✓</span> <strong>Tracking avanzado Data-Driven</strong></li>
+        <li><span class="ico-yes" style="color:var(--accent);">✓</span> <strong>Arquitectura AI-Native por encima de tu WordPress — no tocamos nada</strong></li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- PAGO -->
+  <h3>Forma de pago</h3>
+  <div class="payment-row">
+    <div class="payment-card">
+      <div class="payment-pct">50%</div>
+      <div class="payment-label">Al inicio del proyecto</div>
+      <div class="payment-when">Antes de empezar la implementación</div>
+    </div>
+    <div class="payment-card">
+      <div class="payment-pct">50%</div>
+      <div class="payment-label">Al entregar el sistema</div>
+      <div class="payment-when">Tras la instalación completa y verificada</div>
+    </div>
+  </div>
+
+  <!-- RETAINER -->
+  <h3 style="margin-top:48px;">Posicionamiento continuo — retainer mensual</h3>
+
+  <div class="retainer-hero">
+    <div class="retainer-tag">Oferta exclusiva · La Torre de Karin · Primeros 3 meses</div>
+    <div class="retainer-desc" style="font-size:18px; margin-top:4px;">
+      <strong>50% de descuento durante los 3 primeros meses</strong> — lo contrates cuando lo contrates, sobre el plan que elijas.
+    </div>
+  </div>
+
+  <!-- SCREENSHOT POSICIONAMIENTO MENSUAL -->
+  <div class="screenshot-container" style="margin-top:16px;">
+    <div class="screenshot-label">Planes de posicionamiento mensual — vextria.es</div>
+    <div class="screenshot-frame">
+      <div class="screenshot-bar">
+        <div class="dot dot-r"></div>
+        <div class="dot dot-y"></div>
+        <div class="dot dot-g"></div>
+        <div class="screenshot-url">vextria.es/#pricing</div>
+      </div>
+      <img src="Captura de pantalla 2026-04-03 001128.png" alt="Planes de posicionamiento mensual — Launch 240€/mes, Growth 680€/mes, Authority 1440€/mes">
+    </div>
+  </div>
+
+  <!-- GARANTIA RESULTADOS -->
+  <div class="guarantee-final" style="margin-top:36px;">
+    <div class="gtag">Garantía de resultados</div>
+    <p>Estamos tan seguros de nuestra metodología que te ofrecemos: si no apareces en al menos <strong>3 respuestas de sector y temática</strong> — como las mejores tiendas de Zaragoza para esa temática de cartas o sector — <em>trabajamos gratis hasta que lo consigas</em>.</p>
+  </div>
+
+</div>
+
+</div><!-- end wrap -->
+
+<div class="footer">
+  <div class="flogo"><img src="logo-vextria.png" alt="Vextria"></div>
+  <div class="footer-right">
+    Auditoría La Torre de Karin · Confidencial · Abril 2026<br>
+    Diego Carrodeguas · contacto@vextria.es · vextria.es · +34 630 867 155
+  </div>
+</div>
+
+</body>
+</html>
